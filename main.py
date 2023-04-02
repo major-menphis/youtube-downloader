@@ -236,13 +236,15 @@ class YoutubeApp(QtWidgets.QMainWindow):
         for item in range(len(self.resolutions_availables)+1):
             self.page_download_select_resolution.removeItem(0)
         resolutions_avaiables = self.video_object.streams.filter(progressive=True)
-        resolutions_avaiables = resolutions_avaiables.filter(fps=30)
         self.resolutions_availables = [
             item.resolution for item in resolutions_avaiables]
         self.page_download_select_resolution.addItems(
             self.resolutions_availables)
-        self.page_download_select_resolution.setCurrentIndex(
-            self.resolutions_availables.index(self.resolutions_availables[-1]))
+        try:
+            self.page_download_select_resolution.setCurrentIndex(
+                self.resolutions_availables.index(self.resolutions_availables[-1]))
+        except Exception as error:
+            print(error)
 
     def video_download_task(self):
         btn_download = self.page_download_button_for_download
